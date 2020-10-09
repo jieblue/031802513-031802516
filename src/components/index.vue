@@ -39,6 +39,8 @@ export default {
       text: "",
       lines: "",
       teacher: [],
+      buttontext:"生成",
+      haha:123
     };
   },
   methods: {
@@ -53,12 +55,11 @@ export default {
             teacher.children.forEach((grade) => {
               grade.children.forEach((item,index) => {
                   this.teacher.forEach((teacher,index)=>{
-                    if(teacher.name===item.name){
+                    if(teacher.name && teacher.name===item.name){
                       console.log(teacher);
                       item.children=teacher.children;//此导师的子节点移动
                       this.teacher.splice(index,1);//从根节点移除此导师
                     }
-
                   })
 
 

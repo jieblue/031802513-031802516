@@ -15,8 +15,14 @@ describe('index.vue', () => {
       }
     })
 
-    // 确认是否渲染了 `message`
-    expect(wrapper.find('.button').text()).toEqual('生成')
+    // 确认是否渲染了页面组件
+    const button=wrapper.findComponent({name:'el-button'})
+    expect(button.text()).toEqual('生成')
+    wrapper.vm.text="导师：张三"
+    
+    wrapper.vm.init()
+    expect(wrapper.vm.teacher.name).toEqual("张三")
+    
 
 
 })
