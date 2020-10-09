@@ -45,7 +45,26 @@ export default {
     init() {
       this.teacher = [];//清除数据
       this.initData();//数据处理
+      this.combineTree();//合并树
       //console.log(this.teacher);
+    },
+    combineTree(){
+      this.teacher.forEach((teacher) => {
+            teacher.children.forEach((grade) => {
+              grade.children.forEach((item,index) => {
+                  this.teacher.forEach((teacher,index)=>{
+                    if(teacher.name===item.name){
+                      console.log(teacher);
+                      item.children=teacher.children;//此导师的子节点移动
+                      this.teacher.splice(index,1);//从根节点移除此导师
+                    }
+
+                  })
+
+
+              })
+            })
+      })
     },
     initData() {
       var nowTeacher = "";//当前教师
@@ -54,7 +73,7 @@ export default {
         if (item.includes("导师：")) {//判断是导师
           var temp = item.split("：");
           nowTeacher = temp[1];//开始录入此导师的子节点的标志
-          this.teacher.push({ name: temp[1], children: [], extend: false });
+          this.teacher.push({ name: temp[1], children: [], extend: false ,image_url : require("../assets/head.jpg")});
         } else if (item === "") {//导师后出现空行
           nowTeacher = "";//停止导师录入子节点
         } else if (nowTeacher !== "") {//导师的子节点
@@ -64,12 +83,13 @@ export default {
             if (item.name === nowTeacher) {
               var children = [];
               students.forEach((s) => {
-                children.push({ name: s });
+                children.push({ name: s ,    image_url : require("../assets/head.jpg")});
               });
               item.children.push({
                 name: temp[0],
                 children: children,
                 extend: false,
+            
               });
             }
           });
@@ -77,9 +97,13 @@ export default {
           var temp = item.split("：");//temp[0]学生姓名，temp[1]学生详情
 
           this.teacher.forEach((teacher) => {
+
+             if (teacher.name === temp[0]) {
+                  teacher.detail = temp[1];
+
+                }
             teacher.children.forEach((grade) => {
               grade.children.forEach((item) => {
-                item.image_url = require("../assets/head.jpg");//学生头像
                 if (item.name === temp[0]) {
                   item.detail = temp[1];
 

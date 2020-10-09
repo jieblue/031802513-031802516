@@ -123,6 +123,7 @@ export default {
         };
         if (Props) {
           this.treeData = extendKey(Props);
+          console.log(this.treeData)
         }
       },
       immediate: true,
