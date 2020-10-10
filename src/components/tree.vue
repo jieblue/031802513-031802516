@@ -36,7 +36,7 @@
               style="float: right; padding: 13px 0"
               type="primary"
               round
-              @click="showDetail(treeData)"
+              @click.native="showDetail(treeData)"
               >查看详情</el-button
             >
           </div>
@@ -75,7 +75,7 @@
         colspan="2"
         class="childLevel"
       >
-        <TreeChart :json="children" @click-node="$emit('click-node', $event)" />
+        <TreeChart class="childNode" :json="children" @click-node="$emit('click-node', $event)" />
       </td>
     </tr>
     <el-dialog
@@ -83,12 +83,11 @@
       title="详情"
       :visible.sync="dialogVisible"
       width="30%"
-      :close="handleClose"
     >
       <p>姓名：{{ name }}</p>
       <p>详情：{{ detail }}</p>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false"
+        <el-button type="primary" @click.native="dialogVisible = false"
           >关闭</el-button
         >
       </span>
@@ -123,7 +122,6 @@ export default {
         };
         if (Props) {
           this.treeData = extendKey(Props);
-          console.log(this.treeData)
         }
       },
       immediate: true,
@@ -139,13 +137,7 @@ export default {
     },
   },
   methods: {
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then((_) => {
-          done();
-        })
-        .catch((_) => {});
-    },
+
     toggleExtend: function (treeData) {
       treeData.extend = !treeData.extend;
       this.$forceUpdate();

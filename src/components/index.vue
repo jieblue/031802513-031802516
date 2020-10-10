@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    <el-card class="inputfield" :shadow="hover">
     <el-row :gutter="20" class="el-row" type="flex">
       <el-col :span="8" :offset="8">
         <el-input
@@ -14,9 +15,11 @@
     </el-row>
     <el-row :gutter="20" class="el-row" type="flex">
       <el-col :span="8" :offset="8">
-        <el-button @click="init" class="button">生成</el-button>
+        <el-button @click.native="init" class="button">生成</el-button>
       </el-col>
     </el-row>
+    </el-card>
+       <el-card class="treefield" :shadow="hover">
     <div
       v-drag
       class="card"
@@ -25,7 +28,8 @@
     >
       <TreeChart :json="item"></TreeChart>
     </div>
-  </div>
+  </el-card>
+    </div>
 </template>
 
 <script>
@@ -39,8 +43,6 @@ export default {
       text: "",
       lines: "",
       teacher: [],
-      buttontext:"生成",
-      haha:123
     };
   },
   methods: {
@@ -53,7 +55,7 @@ export default {
     combineTree(){
       this.teacher.forEach((teacher) => {
             teacher.children.forEach((grade) => {
-              grade.children.forEach((item,index) => {
+              grade.children.forEach((item) => {
                   this.teacher.forEach((teacher,index)=>{
                     if(teacher.name && teacher.name===item.name){
                       console.log(teacher);
@@ -78,8 +80,8 @@ export default {
         } else if (item === "") {//导师后出现空行
           nowTeacher = "";//停止导师录入子节点
         } else if (nowTeacher !== "") {//导师的子节点
-          var temp = item.split("：");
-          var students = temp[1].split("、");
+          var temp1 = item.split("：");
+          var students = temp1[1].split("、");
           this.teacher.filter((item) => {
             if (item.name === nowTeacher) {
               var children = [];
@@ -87,7 +89,7 @@ export default {
                 children.push({ name: s ,    image_url : require("../assets/head.jpg")});
               });
               item.children.push({
-                name: temp[0],
+                name: temp1[0],
                 children: children,
                 extend: false,
             
@@ -95,18 +97,18 @@ export default {
             }
           });
         } else {//判断是学生的具体信息
-          var temp = item.split("：");//temp[0]学生姓名，temp[1]学生详情
+          var temp2 = item.split("：");//temp[0]学生姓名，temp[1]学生详情
 
           this.teacher.forEach((teacher) => {
 
-             if (teacher.name === temp[0]) {
-                  teacher.detail = temp[1];
+             if (teacher.name === temp2[0]) {
+                  teacher.detail = temp2[1];
 
                 }
             teacher.children.forEach((grade) => {
               grade.children.forEach((item) => {
-                if (item.name === temp[0]) {
-                  item.detail = temp[1];
+                if (item.name === temp2[0]) {
+                  item.detail = temp2[1];
 
                   return;
                 }
@@ -137,7 +139,7 @@ export default {
             oDiv.style.top = top + "px";
           };
 
-          document.onmouseup = (e) => {
+          document.onmouseup = () => {
             document.onmousemove = null;
             document.onmouseup = null;
           };
@@ -170,5 +172,13 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.inputfield {
+  height: 300px;
+  background:	#FFFFE0
+}
+.treefield {
+  height: 640px;
+ background: #66CDAA
 }
 </style>
