@@ -21,7 +21,7 @@ describe('index.vue', () => {
     wrapper.vm.text="导师：张三"
     
     wrapper.vm.init()
-    expect(wrapper.vm.teacher.name).toEqual("张三")
+    expect(wrapper.vm.teacher[0].name).toEqual("张三")
     
 
 
