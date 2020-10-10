@@ -75,7 +75,11 @@
         colspan="2"
         class="childLevel"
       >
-        <TreeChart class="childNode" :json="children" @click-node="$emit('click-node', $event)" />
+        <TreeChart
+          class="childNode"
+          :json="children"
+          @click-node="$emit('click-node', $event)"
+        />
       </td>
     </tr>
     <el-dialog
@@ -137,7 +141,6 @@ export default {
     },
   },
   methods: {
-
     toggleExtend: function (treeData) {
       treeData.extend = !treeData.extend;
       this.$forceUpdate();
