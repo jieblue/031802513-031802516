@@ -18,7 +18,7 @@ describe('index页面测试', () => {
       expect(button.text()).toEqual('生成')
     })
     
-    const button=wrapper.findComponent({name:'el-button'})
+    const button=wrapper.findAllComponents({name:'el-button'}).at(1)
     
     wrapper.vm.text="导师：张三"
     button.trigger('click');

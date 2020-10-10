@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <el-card class="inputfield" :shadow="hover">
+    <el-card class="inputfield" >
     <el-row :gutter="20" class="el-row" type="flex">
       <el-col :span="8" :offset="8">
         <el-input
@@ -14,12 +14,23 @@
       </el-col>
     </el-row>
     <el-row :gutter="20" class="el-row" type="flex">
-      <el-col :span="8" :offset="8">
+            <el-col :span="4" :offset="8">
+       <el-upload
+       action=""
+  class="upload"
+   :on-change="loadFile"
+   :auto-upload="false"
+   :list-type="text"
+  :file-list="fileList">
+  <el-button size="small" type="primary">上传文本</el-button>
+</el-upload>
+      </el-col>
+      <el-col :span="4" >
         <el-button @click.native="init" class="button">生成</el-button>
       </el-col>
     </el-row>
     </el-card>
-       <el-card class="treefield" :shadow="hover">
+       <el-card class="treefield" >
     <div
       v-drag
       class="card"
@@ -43,9 +54,20 @@ export default {
       text: "",
       lines: "",
       teacher: [],
+      fileList:[],
     };
   },
   methods: {
+    //上传文本文件
+    loadFile(file) {
+      let reader = new FileReader()
+        reader.readAsText(file.raw, "utf-8")
+        var _this = this;
+      reader.onload = function (e) {
+      console.log(e.target.result)
+        _this.text=e.target.result
+      }
+      },
     init() {
       this.teacher = [];//清除数据
       this.initData();//数据处理
