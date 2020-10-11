@@ -23,7 +23,7 @@
             :list-type="text"
             :file-list="fileList"
           >
-            <el-button  type="primary">上传文本</el-button>
+            <el-button type="primary">上传文本</el-button>
           </el-upload>
         </el-col>
         <el-col :span="4">
@@ -38,6 +38,13 @@
         v-for="(item, index) in teacher"
         :key="item.name + index"
       >
+        <el-button
+          type="danger"
+          @click="mydelete(item.name)"
+          icon="el-icon-circle-close"
+          circle
+        >
+        </el-button>
         <TreeChart :json="item"></TreeChart>
       </div>
     </el-card>
@@ -70,10 +77,17 @@ export default {
       };
     },
     init() {
-      this.teacher = []; //清除数据
       this.initData(); //数据处理
       this.combineTree(); //合并树
       //console.log(this.teacher);
+    },
+    mydelete(name) {
+      this.teacher.forEach((item, index) => {
+        if (item.name === name) {
+          this.teacher.splice(index, 1);
+          return;
+        }
+      });
     },
     combineTree() {
       this.teacher.forEach((teacher) => {
@@ -218,8 +232,7 @@ button {
   height: 640px;
   background: #66cdaa;
 }
-.index
-{
+.index {
   background-color: blue;
 }
 </style>
